@@ -69,9 +69,9 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   <h2>Шаг 1: что сделано</h2>
   <div class="status">
     <div class="row"><span class="pill ok">готово</span><div>Создан проект <code>MoiDela</code>: одно приложение SwiftUI для iPhone, iPad и Apple TV, стартовый экран «Мои дела» с названием устройства.</div></div>
-    <div class="row"><span class="pill ok">готово</span><div>Подготовлена автоматическая проверка на облачном Mac (GitHub Actions). Она выведет версию Xcode, Command Line Tools, установленные платформы iOS и tvOS, соберёт приложение, запустит его в симуляторах iPhone, iPad и Apple TV и сделает скриншоты.</div></div>
-    <div class="row"><span class="pill no">блокер</span><div>Отправить код в GitHub не удалось: у Claude есть доступ к репозиторию <code>mrBuzil/mrBuzil</code> только на чтение. Пока это не исправлено, облачный Mac не запустится.</div></div>
-    <div class="row"><span class="pill wait">ваш Mac</span><div>Xcode на вашем Mac я проверить не могу: я работаю в облачном Linux-контейнере, а Xcode работает только на macOS. Облачный Mac проверит то же самое. На ваш Mac Xcode понадобится на шаге 2, чтобы поставить приложение на ваш iPhone.</div></div>
+    <div class="row"><span class="pill ok">готово</span><div>Проверен ваш Mac Studio: macOS 27.0.1, Xcode 27.0, Swift 6.4, платформы iOS 27 и tvOS 27. Command Line Tools входят в Xcode, отдельно ставить не нужно. Добавлен XcodeGen 2.46.</div></div>
+    <div class="row"><span class="pill ok">готово</span><div>Приложение собрано и запущено в симуляторах iPhone 18 Pro (iOS 27.0), iPad Pro 13" M5 (iOS 27.0) и Apple TV 4K (tvOS 26.5). Скриншоты проверены: «Мои дела» и название устройства, фирменный зелёный цвет, кириллица без ошибок.</div></div>
+    <div class="row"><span class="pill wait">в работе</span><div>Сохранение кода в приватный репозиторий <code>moi-dela-app</code> на GitHub. Ждём, когда вы откроете Claude доступ.</div></div>
   </div>
 </section>
 
@@ -236,10 +236,8 @@ flowchart LR
 <section>
   <h2>Вопросы к вам</h2>
   <ol>
-    <li>Откройте Claude доступ на запись в репозиторий (или создайте отдельный приватный репозиторий для приложения). Без этого не запустить облачный Mac и не сохранить код.</li>
-    <li>Сейчас репозиторий <code>mrBuzil/mrBuzil</code>, скорее всего, публичный: это страница вашего профиля GitHub. Секретов в коде не будет, но лучше держать приложение в приватном репозитории, например <code>moi-dela-app</code>. Создать его?</li>
-    <li>Есть ли у вас Mac и установлен ли Xcode? Это нужно для шага 2.</li>
-    <li>Подходит ли Supabase в регионе Франкфурт?</li>
+    <li>Решено: приватный репозиторий <code>moi-dela-app</code>; Mac Studio с Xcode 27; Supabase во Франкфурте.</li>
+    <li>Ответы из чата «Готовность к действию», которые важны для приложения: вставьте их в этот чат, отсюда тот чат не виден.</li>
   </ol>
 </section>
 </div>
