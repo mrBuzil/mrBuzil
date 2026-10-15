@@ -16,16 +16,18 @@ REPORT="$OUT/xcode-report.txt"
   echo "== Рантаймы симуляторов"; xcrun simctl list runtimes | grep -E "iOS|tvOS"
 } | tee "$REPORT"
 
-pick() { # $1 = шаблон имени устройства, $2 = шаблон рантайма
+pick() { # $1 = шаблон имени устройства, $2 = платформа (iOS/tvOS). Берём самый новый рантайм.
   xcrun simctl list devices available -j | python3 -c '
 import json,sys,re
-name_re, rt_re = sys.argv[1], sys.argv[2]
+name_re, plat = sys.argv[1], sys.argv[2]
 best=None
 for rt, devs in json.load(sys.stdin)["devices"].items():
-    if not re.search(rt_re, rt): continue
+    m=re.search(r"SimRuntime\.%s-([0-9-]+)$" % plat, rt)
+    if not m: continue
+    ver=tuple(int(x) for x in m.group(1).split("-"))
     for d in devs:
-        if re.search(name_re, d["name"]):
-            best=(rt,d["udid"],d["name"])
+        if re.search(name_re, d["name"]) and (best is None or ver>best[0]):
+            best=(ver,d["udid"])
 print(best[1] if best else "")
 ' "$1" "$2"
 }
@@ -45,7 +47,9 @@ run_on() { # $1 = метка, $2 = UDID, $3 = sdk, $4 = папка продук�
   sleep 8
   xcrun simctl io "$udid" screenshot "$OUT/$label.png"
   # Проверяем, что процесс жив (приложение не упало после запуска)
-  xcrun simctl spawn "$udid" launchctl list | grep -q "$bid" \
+  # Сначала сохраняем список процессов, потом ищем: grep -q в конвейере даёт ложный сбой (SIGPIPE)
+  local procs; procs=$(xcrun simctl spawn "$udid" launchctl list)
+  grep -F "$bid" <<<"$procs" >/dev/null \
     && echo "== $label: приложение запущено и работает" | tee -a "$REPORT" \
     || { echo "== $label: приложение не работает!" | tee -a "$REPORT"; exit 1; }
   xcrun simctl shutdown "$udid" || true
