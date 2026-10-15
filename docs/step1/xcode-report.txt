@@ -1,0 +1,35 @@
+== Xcode
+Xcode 26.6
+Build version 17F113
+== Путь к Xcode
+/Applications/Xcode_26.6.app/Contents/Developer
+== Command Line Tools
+package-id: com.apple.pkg.CLTools_Executables
+version: 26.6.0.0.1781586589
+volume: /
+location: /
+install-time: 1788756516
+== swift
+swift-driver version: 1.148.6 Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+== SDK
+	iOS 26.5                      	-sdk iphoneos26.5
+	Simulator - iOS 26.5          	-sdk iphonesimulator26.5
+	tvOS 26.5                     	-sdk appletvos26.5
+	Simulator - tvOS 26.5         	-sdk appletvsimulator26.5
+== Рантаймы симуляторов
+iOS 26.2 (26.2 - 23C54) - com.apple.CoreSimulator.SimRuntime.iOS-26-2
+iOS 26.4 (26.4.1 - 23E254a) - com.apple.CoreSimulator.SimRuntime.iOS-26-4
+iOS 26.5 (26.5 - 23F77) - com.apple.CoreSimulator.SimRuntime.iOS-26-5
+tvOS 26.2 (26.2 - 23K51) - com.apple.CoreSimulator.SimRuntime.tvOS-26-2
+tvOS 26.4 (26.4 - 23L243a) - com.apple.CoreSimulator.SimRuntime.tvOS-26-4
+tvOS 26.5 (26.5 - 23L470) - com.apple.CoreSimulator.SimRuntime.tvOS-26-5
+== iPhone: сборка (22452A91-4697-4369-8812-53ADB77EB73B)
+com.vkuchma.dev.moidela: 5359
+== iPhone: приложение запущено и работает
+== iPad: сборка (A2011F14-88A1-46AA-999A-FD6FEDCD870B)
+com.vkuchma.dev.moidela: 9618
+== iPad: приложение запущено и работает
+== AppleTV: сборка (20184428-2070-406E-BA3F-B579BCAFF448)
+com.vkuchma.dev.moidela: 12231
+== AppleTV: приложение запущено и работает
+== ГОТОВО: всё собрано и запущено
