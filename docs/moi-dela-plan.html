@@ -1,0 +1,245 @@
+<title>Мои дела для Apple</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: one reading column (~70ch), summary first; tables and the diagram scroll inside their own boxes. */
+:root {
+  --bg: #f6f8f7; --panel: #ffffff; --fg: #17211d; --muted: #5a6a63; --line: #d8e1dd;
+  --accent: #2e7d66; --accent-soft: #e2f0eb; --warn: #9a6200; --warn-soft: #fbf0db; --bad: #b23b3b; --bad-soft: #f8e4e4;
+  --f-display: "Unbounded", "IBM Plex Sans", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111816; --panel: #18211e; --fg: #e4ece8; --muted: #95a8a0; --line: #2b3833;
+  --accent: #6cc4a8; --accent-soft: #1d332c; --warn: #e3b25a; --warn-soft: #33290f; --bad: #ec8a8a; --bad-soft: #3a1f1f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111816; --panel: #18211e; --fg: #e4ece8; --muted: #95a8a0; --line: #2b3833;
+  --accent: #6cc4a8; --accent-soft: #1d332c; --warn: #e3b25a; --warn-soft: #33290f; --bad: #ec8a8a; --bad-soft: #3a1f1f; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--f-body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 40px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 700 clamp(28px, 6vw, 44px)/1.1 var(--f-display); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font: 600 22px/1.25 var(--f-body); margin: 0 0 12px; text-wrap: balance; }
+h3 { font: 600 17px/1.3 var(--f-body); margin: 18px 0 6px; }
+p, li { max-width: 68ch; }
+p { margin: 0 0 10px; }
+ul, ol { margin: 0 0 10px; padding-left: 22px; }
+li { margin-bottom: 4px; }
+.lead { font-size: 18px; color: var(--muted); }
+code { font: 14px var(--f-mono); background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+section { min-width: 0; }
+.status { display: grid; gap: 10px; }
+.row { display: flex; gap: 12px; align-items: baseline; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.row > div { min-width: 0; }
+.pill { flex: none; font: 500 12px/1 var(--f-mono); padding: 5px 8px; border-radius: 99px; white-space: nowrap; }
+.ok { color: var(--accent); background: var(--accent-soft); }
+.wait { color: var(--warn); background: var(--warn-soft); }
+.no { color: var(--bad); background: var(--bad-soft); }
+.callout { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; }
+.callout p:last-child { margin: 0; }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+th { font: 500 12px var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+.diagram { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); padding: 12px; }
+.steps { list-style: none; padding: 0; display: grid; gap: 10px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 4px 12px; max-width: none;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); margin: 0; }
+.steps li::before { content: counter(s); grid-row: span 2; font: 700 18px/1.3 var(--f-display); color: var(--accent); }
+.steps b { display: block; }
+.steps .check { font-size: 14px; color: var(--muted); min-width: 0; }
+.steps .check::before { content: "Проверка: "; font-weight: 600; color: var(--fg); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">План и архитектура · 15.10.2026</span>
+  <h1>Мои дела для iPhone, iPad и Apple TV</h1>
+  <p class="lead">Нативное приложение SwiftUI на основе дашборда «Мои дела». Ниже: что уже сделано на шаге 1, из чего состоит приложение, как защищены данные и в каком порядке будем строить. Каждый шаг заканчивается проверкой.</p>
+</header>
+
+<section>
+  <h2>Шаг 1: что сделано</h2>
+  <div class="status">
+    <div class="row"><span class="pill ok">готово</span><div>Создан проект <code>MoiDela</code>: одно приложение SwiftUI для iPhone, iPad и Apple TV, стартовый экран «Мои дела» с названием устройства.</div></div>
+    <div class="row"><span class="pill ok">готово</span><div>Подготовлена автоматическая проверка на облачном Mac (GitHub Actions). Она выведет версию Xcode, Command Line Tools, установленные платформы iOS и tvOS, соберёт приложение, запустит его в симуляторах iPhone, iPad и Apple TV и сделает скриншоты.</div></div>
+    <div class="row"><span class="pill no">блокер</span><div>Отправить код в GitHub не удалось: у Claude есть доступ к репозиторию <code>mrBuzil/mrBuzil</code> только на чтение. Пока это не исправлено, облачный Mac не запустится.</div></div>
+    <div class="row"><span class="pill wait">ваш Mac</span><div>Xcode на вашем Mac я проверить не могу: я работаю в облачном Linux-контейнере, а Xcode работает только на macOS. Облачный Mac проверит то же самое. На ваш Mac Xcode понадобится на шаге 2, чтобы поставить приложение на ваш iPhone.</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Главные решения</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Вопрос</th><th>Решение</th><th>Почему</th></tr></thead>
+    <tbody>
+      <tr><td>Приложение</td><td>Один проект SwiftUI, один таргет на iPhone, iPad и Apple TV, плюс расширение виджетов для iPhone</td><td>Общий код и данные, разница только в экранах</td></tr>
+      <tr><td>Облачная база</td><td>Supabase (Postgres) в регионе Франкфурт</td><td>Правила доступа на уровне строк, вход через Apple, серверные функции, данные в ЕС</td></tr>
+      <tr><td>Вход</td><td>Sign in with Apple → сессия Supabase</td><td>Без паролей; у каждого пользователя свой идентификатор</td></tr>
+      <tr><td>Защита на устройстве</td><td>Face ID при открытии и перед отправкой; токены в Keychain</td><td>Телефон в чужих руках не открывает данные</td></tr>
+      <tr><td>Доступы к Gmail, Slack, Asana…</td><td>Только на сервере, в зашифрованном хранилище Supabase Vault</td><td>На телефоне нет ключей от внешних сервисов</td></tr>
+      <tr><td>Модули</td><td>Каждый сервис или дашборд — отдельный пакет Swift с общим интерфейсом</td><td>Новый сервис добавляется без переделки остального</td></tr>
+      <tr><td>Опасные действия</td><td>Очередь действий с подтверждением Face ID</td><td>Письмо или событие календаря уходит только после вашего «Да»</td></tr>
+      <tr><td>Данные задач Claude</td><td>Задачи по расписанию пишут в базу через защищённую точку приёма</td><td>Те же наборы report, replies, body и др. появляются в приложении</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Общая схема</h2>
+  <div class="diagram">
+<pre class="mermaid">
+flowchart LR
+  subgraph Устройства
+    IP[iPhone + виджеты]
+    IPAD[iPad]
+    TV[Apple TV, только просмотр]
+  end
+  subgraph Supabase [Supabase, Франкфурт]
+    AUTH[Вход через Apple]
+    DB[(Postgres + правила по пользователю)]
+    FN[Серверные функции]
+    VAULT[Vault: ключи сервисов]
+  end
+  CL[Задачи Claude по расписанию]
+  EXT[Asana, Google, Gmail, Slack, Pipedrive, LinkedIn]
+  IP -- читает, ставит действия --> DB
+  IPAD -- читает, ставит действия --> DB
+  TV -- только читает --> DB
+  IP --> AUTH
+  CL -- пишет наборы данных --> FN
+  FN --> DB
+  FN -- выполняет подтверждённые действия --> EXT
+  FN --- VAULT
+</pre>
+  </div>
+  <p>Приложение не ходит во внешние сервисы напрямую. Оно читает из своей базы и ставит действия в очередь. Серверная функция выполняет действие ключом из Vault и пишет результат обратно. Apple Reminders — исключение: это данные на самом устройстве, их модуль работает локально через EventKit.</p>
+</section>
+
+<section>
+  <h2>Почему Supabase</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Вариант</th><th>Плюсы</th><th>Минусы</th></tr></thead>
+    <tbody>
+      <tr><td>Supabase ✔</td><td>Postgres с правилами Row Level Security; вход через Apple из коробки; серверные функции и расписания; хранилище секретов; регион ЕС; бесплатный тариф для старта; официальная библиотека для Swift</td><td>Ещё один сервис, за которым нужно следить; на бесплатном тарифе проект засыпает после недели без запросов (задачи Claude будят его ежедневно)</td></tr>
+      <tr><td>CloudKit (Apple)</td><td>Бесплатно; личная база каждого пользователя приватна автоматически</td><td>Сервер не может писать в личную базу пользователя, значит задачи Claude не смогут туда класть данные. Решающий минус</td></tr>
+      <tr><td>Firebase</td><td>Зрелый, есть правила доступа</td><td>Документная база хуже подходит для отчётов и связей; инфраструктура Google; правила сложнее проверять</td></tr>
+      <tr><td>Свой сервер</td><td>Полный контроль</td><td>Безопасность, обновления и резервные копии придётся делать самим</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Данные</h2>
+  <p>В каждой таблице есть поле <code>user_id</code>, и на каждой стоит правило: строку видит и меняет только её владелец (<code>user_id = auth.uid()</code>). Это правило работает в самой базе, поэтому даже ошибка в приложении не покажет чужие данные.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Таблица</th><th>Что хранит</th></tr></thead>
+    <tbody>
+      <tr><td>snapshots</td><td>Наборы от задач Claude целиком (JSON): report, joschka, body, replies, sales, liposts, digest, pfbrief, rest. Ключ: пользователь + набор + дата. Хранится история</td></tr>
+      <tr><td>items</td><td>Отдельные дела, с которыми можно что-то сделать: задача, сообщение, пост, событие, упражнение. Источник, внешний id, статус</td></tr>
+      <tr><td>actions</td><td>Очередь действий: что сделать, с чем, статус (ждёт подтверждения → подтверждено → выполняется → готово или ошибка), кто и когда подтвердил</td></tr>
+      <tr><td>connections</td><td>Какие сервисы подключены и с какими правами. Сами ключи лежат в Vault</td></tr>
+      <tr><td>user_modules</td><td>Какие модули включены, порядок на главном экране</td></tr>
+      <tr><td>ingest_tokens</td><td>Ключи для задач Claude: в базе хранится только отпечаток ключа, ключ можно отозвать</td></tr>
+      <tr><td>audit_log</td><td>Журнал: кто, что и когда изменил или отправил</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Безопасность</h2>
+  <ul>
+    <li><b>Вход.</b> Sign in with Apple. Сессия Supabase хранится в Keychain с доступом «только это устройство, после первой разблокировки». Виджеты читают её через общую группу Keychain.</li>
+    <li><b>Face ID.</b> Запрашивается при открытии и возврате в приложение через 5 минут. Ещё раз перед действиями наружу: отправить письмо или сообщение, создать событие.</li>
+    <li><b>Ключи внешних сервисов</b> (Google, Slack, Asana, Pipedrive) не попадают на телефон. Они лежат в Supabase Vault, ими пользуются только серверные функции.</li>
+    <li><b>Публичный ключ Supabase</b> в приложении не секрет: без входа он ничего не открывает, всё закрыто правилами доступа. Сервисный ключ хранится только на сервере, никогда в коде.</li>
+    <li><b>Копия данных на устройстве</b> для офлайна и виджетов хранится с защитой файлов iOS: файл зашифрован, пока телефон не разблокирован.</li>
+    <li><b>Проверка правил.</b> Автотесты заходят в базу под двумя разными пользователями и проверяют, что чужие строки не видны и не меняются.</li>
+    <li><b>Apple TV</b> только показывает данные: кода действий в версии для TV нет.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Модули</h2>
+  <p>Модуль — это пакет Swift с общим протоколом: название, иконка, какие данные читает, карточка для главного экрана, подробный экран, вид для TV, виджет (если есть) и список поддерживаемых действий. Приложение собирает главный экран из включённых модулей. Новый сервис — новый пакет, остальной код не меняется.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Модуль</th><th>Откуда данные</th><th>Действия в приложении</th></tr></thead>
+    <tbody>
+      <tr><td>Сводка дня</td><td>report (Claude, 3 раза в день)</td><td>Ответить на вопросы Claude</td></tr>
+      <tr><td>Задачи</td><td>Asana, позже Apple Reminders</td><td>Закрыть, перенести, «Жду»</td></tr>
+      <tr><td>Календарь</td><td>Google Calendar</td><td>Создать или перенести событие после подтверждения</td></tr>
+      <tr><td>Ждут ответа</td><td>replies (Gmail, Slack, LinkedIn)</td><td>Отметить отвеченным; отправить черновик после подтверждения</td></tr>
+      <tr><td>LinkedIn</td><td>liposts</td><td>Отметить комментарий оставленным, скопировать текст</td></tr>
+      <tr><td>Тело и практики</td><td>body, joschka, rest</td><td>Галочки упражнений и практик</td></tr>
+      <tr><td>Продажи</td><td>sales, Pipedrive</td><td>Просмотр; ответы на вопросы команды через «Ждут ответа»</td></tr>
+      <tr><td>Деньги</td><td>Google Sheets (портфель), pfbrief</td><td>Только просмотр</td></tr>
+      <tr><td>Коротко о дне</td><td>digest</td><td>Только просмотр</td></tr>
+      <tr><td>Прогресс</td><td>Считается из отметок</td><td>Очки, уровни, достижения</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Как работают действия</h2>
+  <ol>
+    <li>Вы нажимаете, например, «Отправить черновик». Приложение показывает текст и адресата целиком.</li>
+    <li>Подтверждаете через Face ID. В очередь <code>actions</code> уходит запись со статусом «подтверждено».</li>
+    <li>Серверная функция отправляет письмо через Gmail ключом из Vault, ставит «готово» или «ошибка» с причиной.</li>
+    <li>Приложение показывает результат. Без вашего подтверждения письма, сообщения и события календаря не отправляются.</li>
+  </ol>
+  <p>Простые отметки (галочка упражнения, «пост прокомментирован») подтверждения не требуют и работают офлайн: запись уйдёт, когда появится сеть.</p>
+</section>
+
+<section>
+  <h2>Как задачи Claude будут писать в базу</h2>
+  <p>Сейчас задачи Claude по расписанию пишут наборы в дашборд. Добавим точку приёма в Supabase (серверная функция <code>ingest</code>). Задача отправляет набор вместе со своим ключом; функция проверяет ключ и формат и записывает набор в <code>snapshots</code>, а дела из него — в <code>items</code>.</p>
+  <ul>
+    <li><b>Переход без риска:</b> какое-то время задачи пишут и в дашборд, и в базу. Дашборд отключим, когда приложение покажет всё.</li>
+    <li><b>Позже:</b> собственный коннектор «Мои дела» для Claude со входом через ваш аккаунт, без отдельных ключей.</li>
+    <li><b>Отметки обратно:</b> правила вроде «не терять sent у постов LinkedIn» переходят в базу. Отметку ставите вы в приложении, задача её не перезаписывает.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Аккаунт разработчика</h2>
+  <div class="callout">
+    <p><b>Важно:</b> на бесплатном личном Apple ID нельзя включить Sign in with Apple. Кроме того, приложение на iPhone перестаёт открываться через 7 дней и его нужно ставить заново из Xcode, а TestFlight недоступен.</p>
+    <p>Поэтому на этапе разработки вход будет по коду на e-mail (это Supabase тоже умеет). Sign in with Apple включим, когда появится аккаунт SDH IT GmbH. Код входа сделаем так, чтобы смена способа входа была заменой одного модуля.</p>
+  </div>
+  <p>Совет: начните регистрацию SDH IT GmbH в Apple Developer Program уже сейчас. Для компании нужен номер D-U-N-S, его выдача может занять до двух недель. Стоимость программы — 99 USD в год (в Германии около 99 €).</p>
+</section>
+
+<section>
+  <h2>План по шагам</h2>
+  <ol class="steps">
+    <li><b>Каркас проекта и проверка на облачном Mac</b><span class="check">отчёт о Xcode и скриншоты приложения в симуляторах iPhone, iPad и Apple TV.</span></li>
+    <li><b>Запуск на вашем iPhone</b> — вместе пошагово: Xcode на вашем Mac, вход личным Apple ID, установка на телефон.<span class="check">вы видите экран «Мои дела» на телефоне.</span></li>
+    <li><b>Supabase:</b> проект во Франкфурте, таблицы, правила доступа.<span class="check">автотест под двумя пользователями: чужие данные не видны.</span></li>
+    <li><b>Вход и защита:</b> вход по коду на e-mail, Keychain, Face ID.<span class="check">автотесты плюс ваш вход на телефоне.</span></li>
+    <li><b>Ядро модулей и первый модуль «Сводка дня»</b> (только чтение, работает офлайн).<span class="check">в приложении видна сегодняшняя сводка.</span></li>
+    <li><b>Точка приёма для задач Claude</b>, запись наборов в обе стороны.<span class="check">после запуска задачи свежие данные появляются в приложении.</span></li>
+    <li><b>Модули для чтения:</b> ответы, тело и практики, Йошка, LinkedIn, продажи, деньги, календарь, задачи.<span class="check">сравнение с дашбордом, экран за экраном.</span></li>
+    <li><b>Действия:</b> очередь, серверные функции, подтверждение Face ID.<span class="check">на тестовых данных, затем первое реальное действие при вас.</span></li>
+    <li><b>Виджеты iPhone</b>, включая интерактивные галочки.<span class="check">скриншоты виджетов и проверка на вашем телефоне.</span></li>
+    <li><b>Режим Apple TV</b>: крупные карточки, автопрокрутка, только просмотр.<span class="check">скриншоты из симулятора Apple TV.</span></li>
+    <li><b>Переход на SDH IT GmbH:</b> Sign in with Apple, TestFlight.<span class="check">установка через TestFlight без Xcode.</span></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Вопросы к вам</h2>
+  <ol>
+    <li>Откройте Claude доступ на запись в репозиторий (или создайте отдельный приватный репозиторий для приложения). Без этого не запустить облачный Mac и не сохранить код.</li>
+    <li>Сейчас репозиторий <code>mrBuzil/mrBuzil</code>, скорее всего, публичный: это страница вашего профиля GitHub. Секретов в коде не будет, но лучше держать приложение в приватном репозитории, например <code>moi-dela-app</code>. Создать его?</li>
+    <li>Есть ли у вас Mac и установлен ли Xcode? Это нужно для шага 2.</li>
+    <li>Подходит ли Supabase в регионе Франкфурт?</li>
+  </ol>
+</section>
+</div>
