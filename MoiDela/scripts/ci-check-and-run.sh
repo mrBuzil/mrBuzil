@@ -43,7 +43,15 @@ run_on() { # $1 = метка, $2 = UDID, $3 = sdk, $4 = папка продук�
   xcrun simctl boot "$udid" 2>/dev/null || true
   xcrun simctl bootstatus "$udid" -b
   xcrun simctl install "$udid" "$app"
-  xcrun simctl launch "$udid" "$bid" | tee -a "$REPORT"
+  # После первой загрузки симулятор ещё дозапускает системные службы, и первый
+  # запуск приложения может вернуть «No such process». Пробуем до 5 раз.
+  local try
+  for try in 1 2 3 4 5; do
+    if xcrun simctl launch "$udid" "$bid" >>"$REPORT" 2>&1; then break; fi
+    echo "== $label: запуск не удался (попытка $try), ждём 10 с" | tee -a "$REPORT"
+    [ "$try" = 5 ] && exit 1
+    sleep 10
+  done
   sleep 8
   xcrun simctl io "$udid" screenshot "$OUT/$label.png"
   # Проверяем, что процесс жив (приложение не упало после запуска)
